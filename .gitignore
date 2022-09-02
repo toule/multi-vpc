@@ -1,0 +1,4 @@
+stage/*/.terraform*
+stage/*/terraform*
+stage/*/*/.terraform*
+stage/*/*/terraform*
