@@ -57,7 +57,7 @@ variable "tags" {
 	type		= map(string)
 	default		= {
 		"Infra" = "Terraform"
-		"Author" = "RayHLi"
+		"Temp" = "RayHLi"
 	}
 }
 
@@ -85,6 +85,12 @@ variable "enable_vpn_gateway" {
 	default		= false
 }
 
+variable "sg" {
+	description = "Define Security Group"
+	type		= any
+	default		= {}
+}
+
 variable "single_nat" {
 	description = "Define Single Nat"
 	type		= bool
@@ -101,4 +107,10 @@ variable "endpoints" {
 	description = "Define VPC Endpoint"
 	type		= any
 	default		= {}
+}
+
+variable "endpoint_sg" {
+	description = "Define VPC Endpoint SG"
+	type		= string
+	default		= ""
 }

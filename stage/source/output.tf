@@ -13,7 +13,3 @@ output "public_subnet" {
 output "private_subnet" {
 	value = module.vpc.private_subnet.CIDR
 }
-
-output "private_subnet_id" {
-	value = module.vpc.vpc_private_subnet[*].id
-}

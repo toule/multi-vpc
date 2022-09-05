@@ -45,7 +45,7 @@ resource "aws_vpc_endpoint" "endpoint" {
 	vpc_endpoint_type = lookup(each.value, "type")
 	
 	subnet_ids = lookup(each.value, "type") == "Interface" ? [for s in range(local.pri_len) : aws_subnet.private_subnet[s].id] : null
-	security_group_ids = lookup(each.value, "type") == "Interface" ? [aws_security_group.endpoint_sg.id,] : null
+	security_group_ids = lookup(each.value, "type") == "Interface" ? [lookup(each.value, "SG")] : null
 
 	service_name = "com.amazonaws.${var.region}.${each.key}"
 
@@ -55,7 +55,6 @@ resource "aws_vpc_endpoint" "endpoint" {
 		{"Name"="${var.name}-${each.key}-${lookup(each.value, "type")}-endpoint"},
 		var.tags,
 	)
-
 }
 
 resource "aws_vpn_gateway" "vpn_gw" {

@@ -1,17 +1,26 @@
-resource "aws_security_group" "endpoint_sg" {
+locals {
+	sg = {for k,v in var.sg : k=>v}
+}
+
+resource "aws_security_group" "sg" {
+	for_each = local.sg
     vpc_id = aws_vpc.my_vpc[0].id
-    name = "vpc-endpoint-sg"
-    description = "endpoint sg"
+    name = each.value.Name
+    description = "security group"
     ingress {
-        from_port = 443
-        to_port = 443
-        protocol = "tcp"
-        cidr_blocks = [aws_vpc.my_vpc[0].cidr_block]
+        from_port = lookup(each.value.Ingress, "F-Port")
+        to_port = lookup(each.value.Ingress, "T-Port")
+        protocol = lookup(each.value.Ingress, "PROTOCOL")
+        cidr_blocks = lookup(each.value.Ingress, "CIDR")
     }
     egress {
-        from_port = 0
-        to_port = 0
-        cidr_blocks = [var.cidr]
-        protocol = -1
+        from_port = lookup(each.value.Egress, "F-Port")
+        to_port = lookup(each.value.Egress, "T-Port")
+        cidr_blocks = lookup(each.value.Egress, "CIDR")
+        protocol = lookup(each.value.Egress, "PROTOCOL")
     }
+	tags = merge(
+		{"Name"="${var.name}-${upper(each.key)}-SG"},
+		var.tags,
+	)
 }
