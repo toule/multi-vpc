@@ -78,3 +78,9 @@ variable "vpc_id" {
     type        = string
     default     = null
 }
+
+variable "attach_target_id" {
+    description = "Define the Attach Target ID(Instance/ECS Container/Lambda etc..)"
+    type        = string
+    default     = null
+}

@@ -7,3 +7,11 @@ resource "aws_lb_target_group" "elb_target" {
   protocol = var.target_protocol
   vpc_id   = var.vpc_id
 }
+
+resource "aws_lb_target_group_attachment" "elb_attach" {
+  count = var.create_tg == true ? 1:0
+
+  target_group_arn = aws_lb_target_group.elb_target.arn
+  target_id        = var.attach_target_id
+  port             = var.target_port
+}
