@@ -80,7 +80,7 @@ module "bastion" {
     user_data = local.user_data
     ami = "ami-01d87646ef267ccd7"
     instance_type = "t3.micro"
-    subnet_id = module.vpc.vpc_public_subnet[0].id ##subnet_id = "subnet-0222aaec8f37ec604"
+    subnet_id = module.vpc.vpc_public_subnet[0].id  ##subnet_id = "subnet-0222aaec8f37ec604"
     sg_id = [module.vpc.security_group.ssh.id]
 
     key_name = "keypair" ##Using existed keypair
@@ -111,6 +111,15 @@ module "jenkins" {
 
 module "test-elb" {
 	source = "github.com/toule/terraform-rayhli/module/elb"
+	create_elb = true
+	elb_name = "jenkins-elb"
+	subnets_id = [module.vpc.vpc_public_subnet[0].id, module.vpc.vpc_public_subnet[1].id] ##subnet_id = "subnet-0222aaec8f37ec604"
+
+	create_tg = true
+	vpc_id = module.vpc.vpc.id
+	target_port = 80
+	target_protocol = "HTTP"
+	target_type = "instance"
 }
 
 terraform {

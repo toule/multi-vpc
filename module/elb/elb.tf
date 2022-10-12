@@ -8,12 +8,6 @@ resource "aws_lb" "test" {
 
   enable_deletion_protection = var.enable_protection
 
- #access_logs {
-   #bucket  = aws_s3_bucket.lb_logs.bucket
-   #prefix  = "test-lb"
-   #enabled = true
-#}
-
   tags = {
     Environment = "production"
   }

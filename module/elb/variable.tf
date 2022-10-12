@@ -48,3 +48,33 @@ variable "tags" {
         "Temp" = "RayHLi"
     }
 }
+
+variable "create_tg" {
+    description = "Define Enable ELB Target Group"
+    type        = bool
+    default     = false
+}
+
+variable "target_type" {
+    description = "Define ELB Target Group Type"
+    type        = string
+    default     = "instance"
+}
+
+variable "target_port" {
+	description = "Define ELB Target Group Port"
+	type		= number
+	default		= 0
+}
+
+variable "target_protocol" {
+    description = "Define ELB Target Group Protocol"
+    type        = string
+    default     = null
+}
+
+variable "vpc_id" {
+    description = "Define the VPC ID where the Working ELB"
+    type        = string
+    default     = null
+}
