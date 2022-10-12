@@ -11,7 +11,7 @@ resource "aws_lb_target_group" "elb_target" {
 resource "aws_lb_target_group_attachment" "elb_attach" {
   count = var.create_tg == true ? 1:0
 
-  target_group_arn = aws_lb_target_group.elb_target.arn
+  target_group_arn = aws_lb_target_group.elb_target[0].arn
   target_id        = var.attach_target_id
   port             = var.target_port
 }

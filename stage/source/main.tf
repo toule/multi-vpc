@@ -23,6 +23,11 @@ module "vpc" {
 	single_nat = true
 
 	sg = {
+        http = {
+            "Name" = "HTTP-SG",
+            "Ingress" = {"F-Port"="80","T-Port"="80","PROTOCOL"="TCP","CIDR"=["0.0.0.0/0"]},
+            "Egress" = {"F-Port"="0","T-Port"="0","PROTOCOL"="-1","CIDR"=["0.0.0.0/0"]},
+        },
         vpc-endpoint = {
             "Name" = "Endpoint-SG",
             "Ingress" = {"F-Port"="443","T-Port"="443","PROTOCOL"="TCP","CIDR"=[module.vpc.vpc[0].cidr_block]},
@@ -113,13 +118,15 @@ module "test-elb" {
 	source = "github.com/toule/terraform-rayhli/module/elb"
 	create_elb = true
 	elb_name = "jenkins-elb"
+	security_groups_id = [module.vpc.security_group.http.id]
 	subnets_id = [module.vpc.vpc_public_subnet[0].id, module.vpc.vpc_public_subnet[1].id] ##subnet_id = "subnet-0222aaec8f37ec604"
 
 	create_tg = true
-	vpc_id = module.vpc.vpc.id
+	vpc_id = module.vpc.vpc[0].id
 	target_port = 80
 	target_protocol = "HTTP"
 	target_type = "instance"
+	attach_target_id = module.jenkins.ec2[0].id
 }
 
 terraform {
