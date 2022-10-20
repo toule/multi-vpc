@@ -58,5 +58,5 @@ variable "tags" {
 variable "associate_public_ip_address" {
 	description = "Define Public Address"
 	type		= bool
-	default		= true
+	default		= null
 }

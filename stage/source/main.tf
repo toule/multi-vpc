@@ -87,6 +87,7 @@ module "bastion" {
     instance_type = "t3.micro"
     subnet_id = module.vpc.vpc_public_subnet[0].id  ##subnet_id = "subnet-0222aaec8f37ec604"
     sg_id = [module.vpc.security_group.ssh.id]
+    associate_public_ip_address = true
 
     key_name = "keypair" ##Using existed keypair
 
