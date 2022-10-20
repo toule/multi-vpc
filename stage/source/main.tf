@@ -82,7 +82,6 @@ module "bastion" {
     create_ec2 = true
     ec2_name = "bastion-dev-instance"
 	
-	associate_public_ip_address = true
     user_data = local.user_data
     ami = "ami-01d87646ef267ccd7"
     instance_type = "t3.micro"
