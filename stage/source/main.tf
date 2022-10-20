@@ -82,6 +82,7 @@ module "bastion" {
     create_ec2 = true
     ec2_name = "bastion-dev-instance"
 
+	associate_public_ip_address = true
     user_data = local.user_data
     ami = "ami-01d87646ef267ccd7"
     instance_type = "t3.micro"
@@ -116,7 +117,7 @@ module "jenkins" {
 
 module "test-elb" {
 	source = "github.com/toule/terraform-rayhli/module/elb"
-	create_elb = true
+	create_elb = false
 	elb_name = "jenkins-elb"
 	security_groups_id = [module.vpc.security_group.http.id]
 	subnets_id = [module.vpc.vpc_public_subnet[0].id, module.vpc.vpc_public_subnet[1].id] ##subnet_id = "subnet-0222aaec8f37ec604"
